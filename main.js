@@ -32,11 +32,14 @@ const display = document.querySelector('#display');
 const ArithOperators = document.querySelectorAll('.operator');
 const equalOperator = document.querySelector('#equal');
 
-let displayValue = {};
+let value = '';
+let displayValue = '';
+
+// display text content and store value in displayValue 
 
 const createDisplayValue = (e => {
-    displayValue = e.target.textContent;
-    
+    value = e.target.textContent;
+    displayValue += parseInt(value);
     display.textContent = displayValue;
 });
 
