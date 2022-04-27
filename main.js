@@ -32,23 +32,72 @@ const display = document.querySelector('#display');
 const ArithOperators = document.querySelectorAll('.operator');
 const equalOperator = document.querySelector('#equal');
 
-let value = '';
-let displayValue = '';
+let result;
+let operatorValue = '';
+let value;
+let firstValue = '';
+let secondValue = '';
+let error = '';
 
 // display text content and store value in displayValue 
 
 const createDisplayValue = (e => {
     value = e.target.textContent;
-    displayValue += parseInt(value);
-    display.textContent = displayValue;
-});
+    if (operatorValue == '') {
+        firstValue += value;
+        display.textContent = firstValue;
+    } else if (firstValue !== '') {
+        secondValue += value;
+        display.textContent = secondValue;
+}});
 
 btn.forEach(button => button.addEventListener('click', createDisplayValue));
 
-const getFirstNumber = (e => {
-    console.log(e.target.textContent);
+// store operation value and when user click another operation value, operate()
 
-})
+const storeOperation = (e => {
+    if (operatorValue !== '') {
+        operatorValue = operatorValue;
+    } else {
+        operatorValue = e.target.textContent;
+    }
+    if (firstValue && secondValue && operatorValue !== '') {
+        firstValue = parseInt(firstValue);
+        secondValue = parseInt(secondValue);
+        result = operate(operatorValue, firstValue, secondValue);
+        result = Math.round(result * 100) / 100;
+        display.textContent = result;
+        firstValue = result;
+        secondValue = '';
+        operatorValue = '';
+    }
+    operatorValue = e.target.textContent;
+});
 
-ArithOperators.forEach(operator => operator.addEventListener('click', getFirstNumber));
+ArithOperators.forEach(operator => operator.addEventListener('click', storeOperation));
+
+equalOperator.addEventListener('click', () => {
+    if (firstValue == '' || secondValue == '') {
+        error = `ERROR!! what's nothing = to nothing? Idk neither`;
+        display.textContent = error;
+        firstValue = '';
+        secondValue = '';
+        operatorValue = '';
+        return error;
+    } else if (secondValue == 0 && operatorValue == '/') {
+        error = `can't divide any number by zero! it's infinity..duh`
+        display.textContent = error;
+        firstValue = '';
+        secondValue = '';
+        operatorValue = '';
+        return error;
+}
+    firstValue = parseInt(firstValue);
+    secondValue = parseInt(secondValue);
+    result = operate(operatorValue, firstValue, secondValue);
+    result = Math.round(result * 100) / 100;
+    display.textContent = result;
+    firstValue = result;
+    secondValue = '';
+});
 
