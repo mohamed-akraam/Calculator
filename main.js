@@ -31,6 +31,7 @@ const btn = document.querySelectorAll('.btn');
 const display = document.querySelector('#display');
 const ArithOperators = document.querySelectorAll('.operator');
 const equalOperator = document.querySelector('#equal');
+const clear = document.getElementById('wipe');
 
 let result;
 let operatorValue = '';
@@ -51,7 +52,6 @@ const createDisplayValue = (e => {
         display.textContent = secondValue;
 }});
 
-btn.forEach(button => button.addEventListener('click', createDisplayValue));
 
 // store operation value and when user click another operation value, operate()
 
@@ -74,11 +74,11 @@ const storeOperation = (e => {
     operatorValue = e.target.textContent;
 });
 
-ArithOperators.forEach(operator => operator.addEventListener('click', storeOperation));
+// calculate result when user click on equal button 
 
-equalOperator.addEventListener('click', () => {
+const calcEqualResult = () => {
     if (firstValue == '' || secondValue == '') {
-        error = `ERROR!! what's nothing = to nothing? Idk neither`;
+        error = `ERROR!! what's a number equal to!! itself duh`;
         display.textContent = error;
         firstValue = '';
         secondValue = '';
@@ -99,5 +99,19 @@ equalOperator.addEventListener('click', () => {
     display.textContent = result;
     firstValue = result;
     secondValue = '';
-});
+};
 
+const createWipeData = () => {
+    firstValue = '';
+    secondValue = '';
+    operatorValue = '';
+    display.textContent = 'Display';
+};
+
+btn.forEach(button => button.addEventListener('click', createDisplayValue));
+
+ArithOperators.forEach(operator => operator.addEventListener('click', storeOperation));
+
+equalOperator.addEventListener('click', calcEqualResult);
+
+clear.addEventListener('click', createWipeData);
