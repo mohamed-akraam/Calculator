@@ -14,7 +14,7 @@ const divide = function (...num) {
   return num.reduce((total, current) => total / current);
 };
 
-const operate = function (operator, a, b) {
+const operate = (operator, a, b) => {
   switch (operator) {
     case '+':
       return sum(a, b);
@@ -28,10 +28,10 @@ const operate = function (operator, a, b) {
 };
 
 const btn = document.querySelectorAll('.btn');
-const display = document.querySelector('#display');
+const display = document.querySelector('.display');
 const ArithOperators = document.querySelectorAll('.operator');
-const equalOperator = document.querySelector('#equal');
-const clear = document.getElementById('wipe');
+const equalOperator = document.querySelector('.equal');
+const clear = document.querySelector('.wipe');
 
 let result;
 let operatorValue = '';
@@ -78,7 +78,7 @@ const storeOperation = (e) => {
 
 const calcEqualResult = () => {
   if (firstValue == '' || secondValue == '') {
-    error = `ERROR!! what's a number equal to!! itself duh`;
+    error = `ERROR!! Type a number or an operator!`;
     display.textContent = error;
     firstValue = '';
     secondValue = '';
@@ -105,7 +105,7 @@ const createWipeData = () => {
   firstValue = '';
   secondValue = '';
   operatorValue = '';
-  display.textContent = 'Display';
+  display.textContent = '0';
 };
 
 btn.forEach((button) => button.addEventListener('click', createDisplayValue));
